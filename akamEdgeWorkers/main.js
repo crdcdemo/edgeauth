@@ -67,7 +67,7 @@ function edgeAuth(queryString,secretKey,reqPath,skipTimeValidate) {
 
 export function onClientRequest (request) {
     const authSharedKey = "124sk2k3";
-    const authFailedHeaders = {"content-type":"text/html","mime-version":"1.0","validated-by":"edgeworkers","server":"AkamaiGHost","cache-control":"max-age=1"};
+    const authFailedHeaders = {"content-type":"text/plain","validated-by":"edgeworkers","server":"AkamaiGHost"};
     var authCheckResult=false;
     authCheckResult=edgeAuth(request.query,authSharedKey,request.path,false);
 
