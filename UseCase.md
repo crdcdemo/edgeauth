@@ -10,7 +10,7 @@ This is the Edge Token Authentication Signature procedure:
 
 1. Get the value of query string key sigparames, if sigparames is not present, then response 403 Access Denied.
 2. The value of sigparames is a comma-separated list of keys.
-3. Get each of the value of the keys in step 2 from the full query string, and present them with  the form of ‘key=value , then concat them with & in’, and then add the key/value of ‘sigparams=value’ in the end. Then we name this sting as key_value_pairs. Attention, the key/value pairs’ order matters, must be identical with the origin key order in step2.
+3. Get each of the value of the keys in step 2 from the full query string, and present them with  the form of ‘key=value', then concat them with &, and then add the key/value of ‘sigparams=value’ in the end. Then we name this sting as key_value_pairs. Attention, the key/value pairs’ order matters, must be identical with the origin key order in step2.
 4. expires is a mandatory key in the query string, it must present and the value must larger than then current Unix Epoch time. if not, we response 403 access denied.
 5. len is a mandatory key in the query string, it must present and the value must no less than 0.  if not, we response 403 access denied.
 6. Build the plain text for the calculation,  plainText= PATH + Secret + key_value_pairs. PATH is the request path, Secret is a shared secret between the CDN and the web player/app, key_value_pairs is defined in step 3.
