@@ -6,6 +6,8 @@ Considering the Akamai PM configuration file was actually a XML file, which lack
 
 I’m very happy to learn that Akamai provides a new serverless computing solution, EdgeWorkers which can support javascripts programming. Thus I will use EdgeWorkers to build my Edge Token Authentication Signature.
 
+
+### Edge Token Authentication Signature procedure
 This is the Edge Token Authentication Signature procedure:
 
 1. Get the value of query string key sigparames, if sigparames is not present, then response 403 Access Denied.
@@ -18,4 +20,28 @@ This is the Edge Token Authentication Signature procedure:
 Compare the request query string sign’s value and the calculated signature in step 7, if it is equal, then we proceed , if not, we response 403 access denied.
 
 With the javascript programming language and the Akamai Edgeworkers build in object  request object , we can implement the Edge Token Authentication Signature successfully to protect our live streaming content.
+
+### Example
+
+Here is an example.
+
+1. URL to be protected:
+
+  **https://ewcc16.ewcc.in/anything/abcde/protectedinfo**
+
+2. Any request to this URL without the valid token(in query string) will be response with 403 from the Akamai EdgeWorkers
+
+3. a valid Request with valide token in the query string 
+
+   **https://ewcc16.ewcc.in/anything/abcde/protectedinfo?sigparams=a,len,expires,ka,k,ft&a=b&c=123&k=23d&k=22&ft=879&expires=1827215367&len=0&sign=4537d05151d1a114b07c565ea152571d**
+
+4. This is how the token sign=4537d05151d1a114b07c565ea152571d was build:
+
+	* step 1. get the value of sigparams, the key  is [a,len,expires,ka,k,ft]
+	* step 2. verify all the mandatory key and its' value: here len is 0, expires is 1827215367 which is greater than current EPOCH time. (attention, in the javascript code, we id not enforce the expires check for in the first stage)
+	* step 3. find each of the value of the key from the query string, and concate them with &, then we get the plainText of the key_value_pairs: a=b&len=0&expires=1827215367&k=23d&ft=879&sigparams=a,len,expires,ka,k,ft
+	* step 4. build the expected token value with md5(/anything/abcde/protectedinfo124sk2k3a=b&len=0&expires=1827215367&k=23d&ft=879&sigparams=a,len,expires,ka,k,ft), the value is 4537d05151d1a114b07c565ea152571d
+	* step 5. compare the calculated token value with query string sign value, if it is not match, the edge consturce a 403 access deny to the client.
+
+from this example , we can see, we can put any meaningful query string to the query string sigparams, to build the edge auth token more flexiablelly in the client side and the server side will always have the capability to validate it.
 
