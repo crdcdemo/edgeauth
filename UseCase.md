@@ -33,7 +33,7 @@ Here is an example.
 
 3. a valid Request with valide token in the query string 
 
-   **https://ewcc16.ewcc.in/anything/abcde/protectedinfo?sigparams=a,len,expires,ka,k,ft&a=b&c=123&k=23d&k=22&ft=879&expires=1827215367&len=0&sign=4537d05151d1a114b07c565ea152571d**
+   **https://ewcc16.ewcc.in/anything/abcde/protectedinfo?sigparams=a,len,expires,ka,k,ft&a=b&c=123&k=23d&kb=22&ft=879&expires=1827215367&len=0&sign=4537d05151d1a114b07c565ea152571d**
 
 4. This is how the token sign=4537d05151d1a114b07c565ea152571d was build:
 
