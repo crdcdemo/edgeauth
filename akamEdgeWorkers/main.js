@@ -1,4 +1,8 @@
 //use the md5 library from
+
+//https://css-tricks.com/snippets/javascript/javascript-md5/
+//import {MD5} from "./utils/md5.js";
+
 //https://www.myersdaily.org/joseph/javascript/md5-text.html
 import {md5} from "./lib/md5.js";
 
@@ -29,9 +33,14 @@ function edgeAuth(queryString,secretKey,reqPath,skipTimeValidate) {
     logger.log('len: ' + reqQS_len);
     logger.log('sign: ' + reqQS_sign);
     */
+    //handle empty query string len
+    if ( isEmpty(reqQS_len) ) {
+	reqQS_len = "0";
+        reqQS_intOfLen = 0;
+    }
     
     // All mandatory query string must present 
-    if (isEmpty(reqQS_sigparams) || isEmpty(reqQS_expires) || isEmpty(reqQS_len) || isEmpty(reqQS_sign)) {
+    if (isEmpty(reqQS_sigparams) || isEmpty(reqQS_expires) || isEmpty(reqQS_sign)) {
         authResult = false;
     //if skip time validaiton is not ture,
     //we should validate the request query expires with current Epoch time

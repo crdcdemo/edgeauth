@@ -14,7 +14,7 @@ This is the Edge Token Authentication Signature procedure:
 2. The value of sigparames is a comma-separated list of keys.
 3. Get each of the value of the keys in step 2 from the full query string, and present them with  the form of ‘key=value', then concat them with &, and then add the key/value of ‘sigparams=value’ in the end. Then we name this string as key_value_pairs. Attention, the key/value pairs’ order matters, must be identical with the origin key order in step2.
 4. expires is a mandatory key in the query string, it must present and the value must larger than then current Unix Epoch time. if not, we response 403 access denied.
-5. len is a mandatory key in the query string, it must present and the value must no less than 0.  if not, we response 403 access denied.
+5. len is a optional key in the query string, if it was presented, the value must no less than 0.  if it was not presnted, the default value of len is 0
 6. Build the plain text for the calculation,  plainText= PATH + Secret + key_value_pairs. PATH is the request path, Secret is a shared secret between the CDN and the web player/app, key_value_pairs is defined in step 3.
 7. Md5 hash to get the signature, signature=md5(path+secret+key_value_pairs)
 Compare the request query string sign’s value and the calculated signature in step 7, if it is equal, then we proceed , if not, we response 403 access denied.
